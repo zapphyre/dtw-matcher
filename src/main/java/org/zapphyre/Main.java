@@ -1,8 +1,4 @@
-package org.zapphyre.dtw;
-
-import java.time.Duration;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+package org.zapphyre;
 
 public class Main {
 

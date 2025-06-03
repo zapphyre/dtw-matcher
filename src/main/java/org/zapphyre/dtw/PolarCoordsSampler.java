@@ -1,6 +1,6 @@
 package org.zapphyre.dtw;
 
-import org.zapphyre.dtw.model.PolarCoords;
+import org.zapphyre.model.PolarCoords;
 
 import java.time.Duration;
 import java.util.ArrayList;

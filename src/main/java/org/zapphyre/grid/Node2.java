@@ -3,7 +3,9 @@ package org.zapphyre.grid;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
-import org.zapphyre.dtw.model.PolarCoords;
+import org.zapphyre.grid.model.DirectedCoords;
+import org.zapphyre.grid.model.ENextNodeDirection;
+import org.zapphyre.model.PolarCoords;
 
 import java.util.HashMap;
 import java.util.Map;

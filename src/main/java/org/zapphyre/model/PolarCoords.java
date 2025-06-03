@@ -1,4 +1,4 @@
-package org.zapphyre.dtw.model;
+package org.zapphyre.model;
 
 import lombok.Builder;
 import lombok.Value;
