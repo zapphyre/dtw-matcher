@@ -22,21 +22,28 @@ public class StickMotionMapper implements GraphSnaper {
         return new Node(3_000, Math.toRadians(90), 0, 0, ENextNodeDirection.CENTER, "0");
     }
 
-    public Flux<Node> pathCompose(Flux<PolarCoords> stream) {
+    public Flux<String> pathCompose(Flux<PolarCoords> stream) {
+        StringBuilder directions = new StringBuilder();
+
         Disposable windowDisp = stream.window(Duration.ofMillis(210))
                 .flatMap(Flux::collectList)
                 .filter(List::isEmpty)
-                .subscribe(q -> next = root = defaultNode());
+                .subscribe(q -> {
+                    next = root = defaultNode();
+                    directions.setLength(0);
+                });
 
         return stream.map(q -> next.directionFromTheta(q))
-//                .distinctUntilChanged(DirectedCoords::getDirection)
 //                .doOnDiscard(DirectedCoords.class, q -> System.out.println("Discarding " + q))
                 .map(q -> next.movement(q))
                 .map(x -> next = x)
-//                .distinctUntilChanged(Node::getPath)
+//                .distinctUntilChanged(Node::getPathFromPrev)
+                .map(q -> directions.append(q.getPathFromPrev().ordinal()))
+                .map(q -> q.toString())
+
 //                .doOnComplete(windowDisp::dispose)
 //                .map(Node::getPath);
-        ;
+                ;
     }
 
     public Disposable captor(Flux<PolarCoords> stream) {

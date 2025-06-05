@@ -3,6 +3,7 @@ package org.zapphyre.grid;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.zapphyre.grid.model.DirectedCoords;
 import org.zapphyre.grid.model.ENextNodeDirection;
 import org.zapphyre.model.PolarCoords;
@@ -10,6 +11,7 @@ import org.zapphyre.model.PolarCoords;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Value
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @RequiredArgsConstructor
@@ -72,7 +74,7 @@ public class Node2 {
 
         double relR = Math.abs(begin - r);
         DirectedCoords directionResult = directionFromTheta(directedCoords.getCoords());
-        System.out.printf("r=%.2f, theta=%.2f (%s), begin=%.2f, angleDiff=%.2f%n",
+        log.debug("r={}, theta={} ({}), begin={}, angleDiff={}",
                 r, theta, directionResult.getDirection(), begin, computeAngleDiff(theta, initialTheta));
 
         // Compute angular difference
@@ -142,7 +144,7 @@ public class Node2 {
         }
 
         // Debugging output
-        System.out.printf("DEBUG: r=%.2f, theta=%.2f, normalizedTheta=%.2f, adjustedTheta=%.2f, rotatedTheta=%.2f, angleDiff=%.2f, begin=%.2f, direction=%s%n",
+        log.debug("DEBUG: r={}, theta={}, normalizedTheta={}, adjustedTheta={}, rotatedTheta={}, angleDiff={}, begin={}, direction={}",
                 r, theta, normalizedTheta, adjustedTheta, rotatedTheta, angleDiff, begin, direction);
 
         return builder.build();

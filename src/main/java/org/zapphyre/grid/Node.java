@@ -34,7 +34,6 @@ public class Node {
         double theta = directedCoords.getCoords().getTheta();
 
         double relR = Math.abs(begin - r);
-//        System.out.printf("r=%.2f, theta=%.2f (%s)%n", r, theta, directionFromTheta(directedCoords.getCoords()).getDirection());
         // Compute angular difference
         double angleDiff = Math.min(Math.abs(theta - initialTheta), 2 * Math.PI - Math.abs(theta - initialTheta));
 
@@ -59,54 +58,46 @@ public class Node {
             return builder.direction(ENextNodeDirection.CENTER).build();
         }
 
-        // Normalize theta to [0, 2π)
+        // Normalize theta and initialTheta to [0, 2π)
         double normalizedTheta = ((theta % (2 * Math.PI)) + (2 * Math.PI)) % (2 * Math.PI);
         double normalizedInitialTheta = ((initialTheta % (2 * Math.PI)) + (2 * Math.PI)) % (2 * Math.PI);
 
-        // Compute angular difference
-        double angleDiff = Math.min(Math.abs(normalizedTheta - normalizedInitialTheta),
-                2 * Math.PI - Math.abs(normalizedTheta - normalizedInitialTheta));
-
-        // Adjust for joystick: θ ≈ -π/2 (up) maps to NORTH
-        double adjustedTheta = ((normalizedTheta + Math.PI / 2) % (2 * Math.PI) + (2 * Math.PI)) % (2 * Math.PI);
-
-        // Apply rotation: shift sectors by rotationCoefficient * 360°
-        double rotation = rotationCoefficient * 2 * Math.PI;
-        double rotatedTheta = ((adjustedTheta - rotation) % (2 * Math.PI) + (2 * Math.PI)) % (2 * Math.PI);
-
-        // Assign directions to 45° sectors (π/4 radians)
-        if (rotatedTheta >= 0 && rotatedTheta < Math.PI / 4) {
-            builder.direction(ENextNodeDirection.NORTH);
-        } else if (rotatedTheta >= Math.PI / 4 && rotatedTheta < Math.PI / 2) {
-            builder.direction(ENextNodeDirection.NORTH_EAST);
-        } else if (rotatedTheta >= Math.PI / 2 && rotatedTheta < 3 * Math.PI / 4) {
-            builder.direction(ENextNodeDirection.EAST);
-        } else if (rotatedTheta >= 3 * Math.PI / 4 && rotatedTheta < Math.PI) {
-            builder.direction(ENextNodeDirection.SOUTH_EAST);
-        } else if (rotatedTheta >= Math.PI && rotatedTheta < 5 * Math.PI / 4) {
-            builder.direction(ENextNodeDirection.SOUTH);
-        } else if (rotatedTheta >= 5 * Math.PI / 4 && rotatedTheta < 3 * Math.PI / 2) {
-            builder.direction(ENextNodeDirection.SOUTH_WEST);
-        } else if (rotatedTheta >= 3 * Math.PI / 2 && rotatedTheta < 7 * Math.PI / 4) {
-            builder.direction(ENextNodeDirection.WEST);
-        } else {
-            builder.direction(ENextNodeDirection.NORTH_WEST);
+        // Compute angular difference to determine movement direction
+        double angleDiff = Math.abs(normalizedTheta - normalizedInitialTheta);
+        if (angleDiff > Math.PI) {
+            angleDiff = 2 * Math.PI - angleDiff;
         }
 
-        // Flip direction if returning toward center
-        if (r < begin && angleDiff <= maxAngleDeltaRadians) {
-            ENextNodeDirection newDirection = switch (builder.build().getDirection()) {
-                case NORTH -> ENextNodeDirection.SOUTH;
-                case SOUTH -> ENextNodeDirection.NORTH;
-                case EAST -> ENextNodeDirection.WEST;
-                case WEST -> ENextNodeDirection.EAST;
-                case NORTH_EAST -> ENextNodeDirection.SOUTH_WEST;
-                case SOUTH_WEST -> ENextNodeDirection.NORTH_EAST;
-                case NORTH_WEST -> ENextNodeDirection.SOUTH_EAST;
-                case SOUTH_EAST -> ENextNodeDirection.NORTH_WEST;
-                default -> builder.build().getDirection(); // CENTER unchanged
-            };
-            builder.direction(newDirection);
+        // Determine base direction based on normalized theta
+        if (normalizedTheta >= Math.PI / 4 && normalizedTheta < 3 * Math.PI / 4) {
+            builder.direction(ENextNodeDirection.SOUTH); // Swapped to fix up = SOUTH issue
+        } else if (normalizedTheta >= 3 * Math.PI / 4 && normalizedTheta < 5 * Math.PI / 4) {
+            builder.direction(ENextNodeDirection.WEST);
+        } else if (normalizedTheta >= 5 * Math.PI / 4 && normalizedTheta < 7 * Math.PI / 4) {
+            builder.direction(ENextNodeDirection.NORTH); // Swapped to fix down = NORTH
+        } else {
+            builder.direction(ENextNodeDirection.EAST);
+        }
+
+        // If returning toward center (smaller radius than begin), use opposite direction
+        if (r < begin && angleDiff < maxAngleDeltaRadians) {
+            switch (builder.build().getDirection()) {
+                case NORTH:
+                    builder.direction(ENextNodeDirection.SOUTH);
+                    break;
+                case SOUTH:
+                    builder.direction(ENextNodeDirection.NORTH);
+                    break;
+                case WEST:
+                    builder.direction(ENextNodeDirection.EAST);
+                    break;
+                case EAST:
+                    builder.direction(ENextNodeDirection.WEST);
+                    break;
+                default:
+                    // CENTER remains unchanged
+                    break;
+            }
         }
 
         return builder.build();
