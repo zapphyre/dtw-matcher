@@ -8,5 +8,5 @@ import lombok.Value;
 public class CaptorControl {
 
     CaptorDestroy destroy;
-    GraphSniper snap;
+    GraphSnaper snap;
 }

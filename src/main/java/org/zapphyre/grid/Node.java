@@ -34,7 +34,7 @@ public class Node {
         double theta = directedCoords.getCoords().getTheta();
 
         double relR = Math.abs(begin - r);
-        System.out.printf("r=%.2f, theta=%.2f (%s)%n", r, theta, directionFromTheta(directedCoords.getCoords()).getDirection());
+//        System.out.printf("r=%.2f, theta=%.2f (%s)%n", r, theta, directionFromTheta(directedCoords.getCoords()).getDirection());
         // Compute angular difference
         double angleDiff = Math.min(Math.abs(theta - initialTheta), 2 * Math.PI - Math.abs(theta - initialTheta));
 
@@ -95,35 +95,18 @@ public class Node {
 
         // Flip direction if returning toward center
         if (r < begin && angleDiff <= maxAngleDeltaRadians) {
-            switch (builder.build().getDirection()) {
-                case NORTH:
-                    builder.direction(ENextNodeDirection.SOUTH);
-                    break;
-                case SOUTH:
-                    builder.direction(ENextNodeDirection.NORTH);
-                    break;
-                case EAST:
-                    builder.direction(ENextNodeDirection.WEST);
-                    break;
-                case WEST:
-                    builder.direction(ENextNodeDirection.EAST);
-                    break;
-                case NORTH_EAST:
-                    builder.direction(ENextNodeDirection.SOUTH_WEST);
-                    break;
-                case SOUTH_WEST:
-                    builder.direction(ENextNodeDirection.NORTH_EAST);
-                    break;
-                case NORTH_WEST:
-                    builder.direction(ENextNodeDirection.SOUTH_EAST);
-                    break;
-                case SOUTH_EAST:
-                    builder.direction(ENextNodeDirection.NORTH_WEST);
-                    break;
-                default:
-                    // CENTER unchanged
-                    break;
-            }
+            ENextNodeDirection newDirection = switch (builder.build().getDirection()) {
+                case NORTH -> ENextNodeDirection.SOUTH;
+                case SOUTH -> ENextNodeDirection.NORTH;
+                case EAST -> ENextNodeDirection.WEST;
+                case WEST -> ENextNodeDirection.EAST;
+                case NORTH_EAST -> ENextNodeDirection.SOUTH_WEST;
+                case SOUTH_WEST -> ENextNodeDirection.NORTH_EAST;
+                case NORTH_WEST -> ENextNodeDirection.SOUTH_EAST;
+                case SOUTH_EAST -> ENextNodeDirection.NORTH_WEST;
+                default -> builder.build().getDirection(); // CENTER unchanged
+            };
+            builder.direction(newDirection);
         }
 
         return builder.build();

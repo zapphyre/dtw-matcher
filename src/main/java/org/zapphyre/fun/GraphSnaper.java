@@ -3,7 +3,7 @@ package org.zapphyre.fun;
 import org.zapphyre.grid.Node;
 
 @FunctionalInterface
-public interface GraphSniper {
+public interface GraphSnaper {
 
     Node snap();
 }
