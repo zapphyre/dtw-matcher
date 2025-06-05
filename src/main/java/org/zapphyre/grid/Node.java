@@ -81,23 +81,15 @@ public class Node {
 
         // If returning toward center (smaller radius than begin), use opposite direction
         if (r < begin && angleDiff < maxAngleDeltaRadians) {
-            switch (builder.build().getDirection()) {
-                case NORTH:
-                    builder.direction(ENextNodeDirection.SOUTH);
-                    break;
-                case SOUTH:
-                    builder.direction(ENextNodeDirection.NORTH);
-                    break;
-                case WEST:
-                    builder.direction(ENextNodeDirection.EAST);
-                    break;
-                case EAST:
-                    builder.direction(ENextNodeDirection.WEST);
-                    break;
-                default:
-                    // CENTER remains unchanged
-                    break;
-            }
+            builder.direction(
+                    switch (builder.build().getDirection()) {
+                        case NORTH -> ENextNodeDirection.SOUTH;
+                        case SOUTH -> ENextNodeDirection.NORTH;
+                        case WEST -> ENextNodeDirection.EAST;
+                        case EAST -> ENextNodeDirection.WEST;
+                        default -> builder.build().getDirection(); // CENTER unchanged
+                    }
+            );
         }
 
         return builder.build();

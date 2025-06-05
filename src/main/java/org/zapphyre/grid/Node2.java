@@ -26,13 +26,9 @@ public class Node2 {
     // Sector definitions: {direction, startTheta (radians), ordinal}
     private static final Object[][] SECTORS = {
             {ENextNodeDirection.NORTH, 0.0, 0},
-            {ENextNodeDirection.NORTH_EAST, PI_4, 1},
             {ENextNodeDirection.EAST, PI_2, 2},
-            {ENextNodeDirection.SOUTH_EAST, 3 * PI_4, 3},
             {ENextNodeDirection.SOUTH, Math.PI, 4},
-            {ENextNodeDirection.SOUTH_WEST, 5 * PI_4, 5},
             {ENextNodeDirection.WEST, 3 * PI_2, 6},
-            {ENextNodeDirection.NORTH_WEST, 7 * PI_4, 7}
     };
 
     // Opposite direction mapping
@@ -42,10 +38,6 @@ public class Node2 {
         OPPOSITES.put(ENextNodeDirection.SOUTH, ENextNodeDirection.NORTH);
         OPPOSITES.put(ENextNodeDirection.EAST, ENextNodeDirection.WEST);
         OPPOSITES.put(ENextNodeDirection.WEST, ENextNodeDirection.EAST);
-        OPPOSITES.put(ENextNodeDirection.NORTH_EAST, ENextNodeDirection.SOUTH_WEST);
-        OPPOSITES.put(ENextNodeDirection.SOUTH_WEST, ENextNodeDirection.NORTH_EAST);
-        OPPOSITES.put(ENextNodeDirection.NORTH_WEST, ENextNodeDirection.SOUTH_EAST);
-        OPPOSITES.put(ENextNodeDirection.SOUTH_EAST, ENextNodeDirection.NORTH_WEST);
         OPPOSITES.put(ENextNodeDirection.CENTER, ENextNodeDirection.CENTER);
     }
 
