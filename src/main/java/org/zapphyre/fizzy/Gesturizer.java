@@ -40,7 +40,7 @@ public class Gesturizer implements GraphSnaper {
         return new Node(newNodeTreshold, Math.toRadians(rotationDeltaDeg), 0, 0, ENextNodeDirection.CENTER, pathBegin);
     }
 
-    public GestureSupplier pathCompose(Flux<PolarCoords> stream) {
+    public GestureSupplier onPolar(Flux<PolarCoords> stream) {
         return supplier -> {
             Disposable windowDisp = stream.window(Duration.ofMillis(gestureDuration))
                     .flatMap(Flux::collectList)
