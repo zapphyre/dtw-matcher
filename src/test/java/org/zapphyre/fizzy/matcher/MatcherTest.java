@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MatcherInternalTest {
+public class MatcherTest {
 
     private Matcher<String> matcher;
 

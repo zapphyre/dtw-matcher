@@ -1,10 +1,10 @@
-package org.zapphyre.grid;
+package org.zapphyre.fizzy.grid;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
-import org.zapphyre.grid.model.DirectedCoords;
-import org.zapphyre.grid.model.ENextNodeDirection;
+import org.zapphyre.model.DirectedCoords;
+import org.zapphyre.model.ENextNodeDirection;
 import org.zapphyre.model.PolarCoords;
 
 import java.util.HashMap;
@@ -50,8 +50,7 @@ public class Node {
         double r = coords.getRadius();
         double theta = coords.getTheta();
 
-        DirectedCoords.DirectedCoordsBuilder builder = DirectedCoords
-                .builder()
+        DirectedCoords.DirectedCoordsBuilder builder = DirectedCoords.builder()
                 .coords(coords);
 
         if (r < 1e-5) {

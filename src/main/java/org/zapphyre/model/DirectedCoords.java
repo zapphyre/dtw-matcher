@@ -1,8 +1,7 @@
-package org.zapphyre.grid.model;
+package org.zapphyre.model;
 
 import lombok.Builder;
 import lombok.Value;
-import org.zapphyre.model.PolarCoords;
 
 @Value
 @Builder

@@ -1,11 +1,11 @@
-package org.zapphyre.grid;
+package org.zapphyre.fizzy.grid;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.zapphyre.grid.model.DirectedCoords;
-import org.zapphyre.grid.model.ENextNodeDirection;
+import org.zapphyre.model.DirectedCoords;
+import org.zapphyre.model.ENextNodeDirection;
 import org.zapphyre.model.PolarCoords;
 
 import java.util.HashMap;
