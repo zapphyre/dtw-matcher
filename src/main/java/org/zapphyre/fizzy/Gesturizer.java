@@ -1,6 +1,7 @@
 package org.zapphyre.fizzy;
 
 import lombok.Builder;
+import lombok.experimental.NonFinal;
 import org.zapphyre.fizzy.matcher.build.GestureSupplier;
 import org.zapphyre.fizzy.matcher.build.GraphSnaper;
 import org.zapphyre.fizzy.grid.Node;
@@ -13,10 +14,11 @@ import java.time.Duration;
 import java.util.List;
 
 @Builder
-public class StickMotionMapper implements GraphSnaper {
+public class Gesturizer implements GraphSnaper {
 
-    private Node root = defaultNode();
-    private Node next = root;
+    @NonFinal Node root = defaultNode();
+
+    @NonFinal Node next = root;
 
     @Builder.Default
     int newNodeTreshold = 3_000;
@@ -28,7 +30,11 @@ public class StickMotionMapper implements GraphSnaper {
     int gestureDuration = 210;
 
     @Builder.Default
-    private final String pathBegin = "0";
+    String pathBegin = "0";
+
+    public static Gesturizer preset() {
+        return Gesturizer.builder().build();
+    }
 
     Node defaultNode() {
         return new Node(newNodeTreshold, Math.toRadians(rotationDeltaDeg), 0, 0, ENextNodeDirection.CENTER, pathBegin);

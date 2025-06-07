@@ -38,7 +38,6 @@ public class MatcherITest {
 
         Matcher<String> stringMatcher = forKnownValuesMatcher.withTolerances(toleranceConfig);
 
-
         String input = "888800000000022222220000110044444";
         List<MatchResult<String>> match = stringMatcher.match(input);
     }
