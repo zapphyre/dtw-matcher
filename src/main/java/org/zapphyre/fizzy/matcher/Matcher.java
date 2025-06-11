@@ -34,7 +34,7 @@ public class Matcher<T> {
                             double score = computeMatchScore(inputRuns, knownRuns);
                             return MatchResult.<T>builder()
                                     .knownString(known)
-                                    .result(def.getResult())
+                                    .key(def.getKey())
                                     .matchPercentage(score * 100)
                                     .build();
                         }))

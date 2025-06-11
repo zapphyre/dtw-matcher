@@ -9,5 +9,5 @@ import java.util.List;
 @Builder
 public class MatchDefinition<T> {
     List<String> knownValidValues;
-    Result<T> resultTemplate;
+    T key;
 }

@@ -19,7 +19,6 @@ public class Gesturizer {
 
     @Builder.Default
     int newNodeTreshold = 3_000;
-
     @Builder.Default
     int rotationDeltaDeg = 90;
     @Builder.Default

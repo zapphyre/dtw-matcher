@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.zapphyre.fizzy.matcher.build.ToleranceConfigurer;
 import org.zapphyre.fizzy.model.MatchDef;
 import org.zapphyre.fizzy.model.MatchResult;
-import org.zapphyre.fizzy.model.Result;
 import org.zapphyre.fizzy.model.ToleranceConfig;
 
 import java.util.List;
@@ -21,11 +20,10 @@ public class MatcherITest {
 //                "65688888800002222222200004444444"
                 "00000000022222220000110044444"
         );
-        Result<String> resultTemplate = Result.of("totok");
 
         MatchDef<String> matchDef = MatchDef.<String>builder()
                 .knownValues(knownValues)
-                .result(resultTemplate)
+                .key("key")
                 .build();
 
         ToleranceConfig toleranceConfig = ToleranceConfig.builder()

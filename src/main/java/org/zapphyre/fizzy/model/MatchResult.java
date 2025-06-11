@@ -8,5 +8,5 @@ import lombok.Value;
 public class MatchResult<T> {
     String knownString;
     double matchPercentage;
-    Result<T> result;
+    T key;
 }

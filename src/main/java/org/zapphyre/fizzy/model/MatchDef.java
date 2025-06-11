@@ -8,6 +8,6 @@ import java.util.List;
 @Value
 @Builder
 public class MatchDef<T> {
-    Result<T> result;
+    T key;
     List<String> knownValues;
 }
