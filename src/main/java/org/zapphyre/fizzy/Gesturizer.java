@@ -50,6 +50,7 @@ public class Gesturizer {
             return stream.map(q -> next.get().directionFromTheta(q))
                     .map(q -> next.get().movement(q))
                     .doOnComplete(windowDisp::dispose)
+                    .doOnCancel(windowDisp::dispose)
                     .subscribe(next::set);
         };
     }
