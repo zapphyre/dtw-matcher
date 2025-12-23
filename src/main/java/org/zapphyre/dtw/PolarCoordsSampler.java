@@ -23,8 +23,8 @@ public class PolarCoordsSampler {
         }
 
         List<PolarCoords> result = new ArrayList<>();
-        long startTime = input.get(0).timestampMs;
-        long endTime = input.get(input.size() - 1).timestampMs;
+        long startTime = input.getFirst().timestampMs;
+        long endTime = input.getLast().timestampMs;
         long intervalMs = sampleInterval.toMillis();
 
         for (long t = startTime; t <= endTime; t += intervalMs) {

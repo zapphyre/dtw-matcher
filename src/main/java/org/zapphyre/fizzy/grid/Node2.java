@@ -33,6 +33,7 @@ public class Node2 {
 
     // Opposite direction mapping
     private static final Map<ENextNodeDirection, ENextNodeDirection> OPPOSITES = new HashMap<>();
+
     static {
         OPPOSITES.put(ENextNodeDirection.NORTH, ENextNodeDirection.SOUTH);
         OPPOSITES.put(ENextNodeDirection.SOUTH, ENextNodeDirection.NORTH);
